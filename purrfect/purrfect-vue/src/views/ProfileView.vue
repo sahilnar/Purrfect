@@ -10,7 +10,7 @@
                 <p><b>Password:</b>&emsp;&emsp;******</p>
                 <br>
             </div>
-            <button type="submit" class="btn btn-dark btn-shifty-primary" id="btnEdit" @click="editProfile">Edit</button>
+            <button type="submit" class="btn btn-dark btn-purrfect-primary" id="btnEdit" @click="editProfile">Edit</button>
         </div>
     </div>
 </template>

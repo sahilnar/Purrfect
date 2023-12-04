@@ -20,10 +20,10 @@
         </div>
       </div>
       <form class="container-fluid justify-content-start">
-        <button class="btn btn-dark me-2 btn-shifty-primary" v-if="currentUser" :class="disabled" type="button"
+        <button class="btn btn-dark me-2 btn-purrfect-primary" v-if="currentUser" :class="disabled" type="button"
           @click="createPost">Post a
           gig</button>
-        <button class="btn btn-dark me-2 btn-shifty-primary" v-if="currentUser" :class="disabled" type="button"
+        <button class="btn btn-dark me-2 btn-purrfect-primary" v-if="currentUser" :class="disabled" type="button"
           @click="goToApply">Apply for
           a gig</button>
       </form>
@@ -33,7 +33,7 @@
             ("Hello, ") +
             this.currentUser.firstName : ("Register") }}</a>
         </div>
-        <button class="btn btn-shifty-primary btn-dark me-2" type="button"
+        <button class="btn btn-purrfect-primary btn-dark me-2" type="button"
           @click="currentUser ? logout() : goToLogin()">{{
             currentUser ? 'Sign Out'
             : 'Sign In' }}</button>

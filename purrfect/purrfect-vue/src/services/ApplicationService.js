@@ -37,6 +37,13 @@ class ApplicationService {
         //console.log("Application Deleted #" + applicationId);
         return http.delete(`/applications/${applicationId}`);
     }
+
+    updateApplicationStatus(applicationId, status) {
+        const updatedApplication = {
+            "status": status
+        };
+        return http.put(`/applications/${applicationId}`, updatedApplication);
+    }
 }
 
 export default new ApplicationService();

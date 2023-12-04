@@ -7,7 +7,7 @@
                 <input type="password" class="form-control" id="pswdCheck">
             </div>
             <div class="mb-3">
-                <button type="submit" class="btn btn-dark btn-shifty-primary" id="btnCheck"
+                <button type="submit" class="btn btn-dark btn-purrfect-primary" id="btnCheck"
                     @click="passwordCheck">Check</button>
             </div>
             <div class="mb-3">
@@ -19,9 +19,9 @@
                 <input type="password" class="form-control" id="passwordProove">
             </div>
             <div id="buttonLine">
-                <button type="submit" class="btn btn-dark btn-shifty-primary me-2" id="btnUpdate"
+                <button type="submit" class="btn btn-dark btn-purrfect-primary me-2" id="btnUpdate"
                     @click="update">Save</button>
-                <button type="submit" class="btn btn-dark btn-shifty-primary" id="btnCancel" @click="cancel">Cancel</button>
+                <button type="submit" class="btn btn-dark btn-purrfect-primary" id="btnCancel" @click="cancel">Cancel</button>
             </div>
         </div>
     </div>

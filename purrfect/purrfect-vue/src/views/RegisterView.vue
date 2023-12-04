@@ -33,7 +33,7 @@
                     <label for="passwordProove" class="form-label">Enter your password again</label>
                     <input type="password" class="form-control" id="passwordProove" v-model="passwordProove">
                 </div>
-                <button type="submit" class="btn btn-dark btn-shifty-primary" id="btnSubmit"
+                <button type="submit" class="btn btn-dark btn-purrfect-primary" id="btnSubmit"
                     @click="register">Register</button>
             </form>
         </div>

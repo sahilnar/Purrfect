@@ -25,11 +25,11 @@
                         v-model="userRegisterRequest.email">
                 </div>
                 <div id="btnLine mb-3">
-                    <button type="submit" class="btn btn-dark me-2 btn-shifty-primary" id="securityUpdate"
+                    <button type="submit" class="btn btn-dark me-2 btn-purrfect-primary" id="securityUpdate"
                         @click="updatePassword">Change password</button>
-                    <button type="submit" class="btn btn-dark me-2 btn-shifty-primary" id="btnSave"
+                    <button type="submit" class="btn btn-dark me-2 btn-purrfect-primary" id="btnSave"
                         @click="save">Save</button>
-                    <button type="submit" class="btn btn-dark btn-shifty-primary" id="btnCancel"
+                    <button type="submit" class="btn btn-dark btn-purrfect-primary" id="btnCancel"
                         @click="cancel">Cancel</button>
                 </div>
             </form>

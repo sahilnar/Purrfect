@@ -1,6 +1,6 @@
 <template>
     <div class="content"> <!-- DON'T DELETE THIS DIV. ALL THE CONTENT MUST GO INSIDE -->
-        <h1>Get side gigs</h1>
+        <h1>Get PET gigs</h1>
         <h1>anytime, anywhere!</h1>
     </div>
 </template>

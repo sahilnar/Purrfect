@@ -6,6 +6,9 @@ class PostedGigService {
   getApplicationsByJobId(jobId){
     return http.get(`/applications/job/${jobId}`);
   }
+  editJob(data, jobId) {
+    return http.put("/jobs/" + jobId, data);
+  }
   cancelJob(jobId) {
     return http.delete(`/jobs/${jobId}`)
         .then(response => {

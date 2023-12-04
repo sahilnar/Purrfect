@@ -32,21 +32,35 @@
                     <input type="date" class="form-control" id="finishDate" :min="minStartDate"
                         v-model="createPostRequest.job.jobFinishDate" />
                 </div>
-
+                <div class="mb-3">
+                    <label for="startTime" class="form-label">Start Time</label>
+                    <input type="time" class="form-control" id="startTime"
+                        v-model="createPostRequest.job.startTime" />
+                </div>
+                <div class="mb-3">
+                    <label for="endTime" class="form-label">End Time</label>
+                    <input type="time" class="form-control" id="endTime"
+                        v-model="createPostRequest.job.endTime" />
+                </div>
                 <!-- New image upload field -->
                 <div class="mb-3">
                     <label for="jobImage" class="form-label">Job Image</label>
                     <input type="file" class="form-control" id="jobImage" @change="handleImageUpload" 
                     />
                 </div>
-
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" rows="5"
                         v-model="createPostRequest.job.description"></textarea>
                 </div>
+                <div class="mb-3">
+                    <label for="totalHours" class="form-label">Total Hours: &nbsp;</label>
+                    <span>{{ totalHours }}</span> &nbsp;&nbsp;&nbsp; 
+                    <label for="totalCost" class="form-label">Total Pay: &nbsp;</label>
+                    <span>{{ totalCost }}</span>
+                </div>
                 <p id="incorrectInput" style="position:absolute; margin-left: 100px; height: 20px;">{{ message }}</p>
-                <button type="submit" class="btn btn-dark btn-shifty-primary" id="btnSubmit"
+                <button type="submit" class="btn btn-dark btn-purrfect-primary" id="btnSubmit"
                     @click="createPost">Create</button>
 
             </form>
@@ -56,7 +70,7 @@
 </template>
 
 <script>
-import CreatePostService from "../services/CreatePostService";
+import JobPostService from "../services/JobPostService";
 export default {
     name: "createPost",
     data() {
@@ -75,11 +89,21 @@ export default {
                     description: "",
                     jobStartDate: new Date().toISOString().slice(0, 10),
                     jobFinishDate: new Date().toISOString().slice(0, 10),
+                    startTime: "",
+                    endTime: "",
                     image: ""
                 }
             },
             message: "",
+            totalHours: 0,
+            totalCost: 0,
         }
+    },
+    watch: {
+        'createPostRequest.job.startTime': 'updateTotalHoursAndCost',
+        'createPostRequest.job.endTime': 'updateTotalHoursAndCost',
+        'createPostRequest.job.jobStartDate': 'updateTotalHoursAndCost',
+        'createPostRequest.job.jobFinishDate': 'updateTotalHoursAndCost',
     },
     methods: {
         handleImageUpload(event) {
@@ -103,7 +127,7 @@ export default {
                 this.message = "Finish date cannot be less than start date.";
             } else {
                 this.createPostRequest.userId = this.currentUser.userId;
-                CreatePostService.createpost(this.createPostRequest)
+                JobPostService.createPost(this.createPostRequest)
                     .then(response => {
                         let job = response.data;
                         console.log(job);
@@ -123,6 +147,42 @@ export default {
                 this.disabled = "";
             }
             console.log(this.currentUser);
+        },
+        updateTotalHoursAndCost() {
+            // Clear the error message when any relevant field changes
+            this.message = "";
+            if (this.isInvalidTimeRange()) {
+                this.message = "Start time cannot be later than end time.";
+            } else {
+                this.totalHours = this.calculateTotalHours();
+                this.totalCost = this.calculateTotalCost();
+            }
+        },
+        isInvalidTimeRange() {
+            const startDateTime = new Date(
+                `${this.createPostRequest.job.jobStartDate} ${this.createPostRequest.job.startTime}`
+            );
+            const endDateTime = new Date(
+                `${this.createPostRequest.job.jobFinishDate} ${this.createPostRequest.job.endTime}`
+            );
+            return startDateTime >= endDateTime;
+        },
+        calculateTotalHours() {
+            const startDateTime = new Date(
+            `${this.createPostRequest.job.jobStartDate} ${this.createPostRequest.job.startTime}`
+            );
+            const endDateTime = new Date(
+                `${this.createPostRequest.job.jobFinishDate} ${this.createPostRequest.job.endTime}`
+            );
+            const timeDiff = Math.abs(endDateTime - startDateTime);
+            const hours = Math.ceil(timeDiff / (1000 * 60 * 60));
+            return hours;
+        },
+        calculateTotalCost() {
+            const totalHours = this.calculateTotalHours();
+            const hourlyRate = parseFloat(this.createPostRequest.job.hourRate);
+            const totalCost = totalHours * hourlyRate;
+            return totalCost.toFixed(2); // Return the total cost rounded to two decimal places
         },
     },
     mounted() {

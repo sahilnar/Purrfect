@@ -8,10 +8,12 @@
                         <td class="first-row">
                             <h3>{{ job.title }}</h3>
                         </td>
-                        <td class="first-row text-end"><span class="badge rounded-pill ">{{ job.kindOfJob
-                        }}</span>&nbsp;&nbsp;&nbsp;<span class="badge rounded-pill ">Hourly
-                                Rate: ${{ job.hourRate
-                                }}</span>&nbsp;&nbsp;&nbsp;<span class="badge rounded-pill ">Posted {{job.postingDate}}</span></td>
+                        <td class="first-row text-end">
+                            <span class="badge rounded-pill ">{{ job.kindOfJob}}</span>&nbsp;&nbsp;&nbsp;
+                            <span class="badge rounded-pill ">Hourly Rate: ${{ job.hourRate}}</span>&nbsp;&nbsp;&nbsp;
+                            <span class="badge rounded-pill ">Total Hours: {{ calculateTotalHours(job) }}</span>&nbsp;&nbsp;&nbsp; 
+                            <span class="badge rounded-pill ">Total Pay: ${{ calculateTotalCost(job) }}</span>&nbsp;&nbsp;&nbsp; 
+                            <span class="badge rounded-pill ">Posted {{job.postingDate}}</span></td>
                     </tr>
                     <tr>
                         <td colspan="4">
@@ -19,17 +21,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4"><span class="badge rounded-pill ">Start Date: {{ job.jobStartDate
-                        }}</span>&nbsp;&nbsp;&nbsp;<span class="badge rounded-pill ">Finish
-                                Date: {{
-                                    job.jobFinishDate
-                                }}</span></td>
+                        <td colspan="4">
+                            <span class="badge rounded-pill ">Start Date: {{job.jobStartDate}}</span> &nbsp;&nbsp;&nbsp; 
+                            <span class="badge rounded-pill ">Finish Date: {{job.jobFinishDate}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <span class="badge rounded-pill ">Start Time: {{job.startTime}}</span> &nbsp;&nbsp;&nbsp; 
+                            <span class="badge rounded-pill ">Finish time: {{job.endTime}}</span>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="4">{{ job.description }}</td>
                     </tr>
                     <tr>
-                        <td class="last-row"><button class="btn btn-dark me-2 btn-shifty-primary" :id="index"
+                        <td class="last-row"><button class="btn btn-dark me-2 btn-purrfect-primary" :id="index"
                                 :disabled="job.applied" @click="applyNow(job.jobId, job)">{{ job.applied ? 'Applied' :
                                     'Apply' }}</button></td>
                     </tr>
@@ -96,20 +103,24 @@ export default {
                             this.filterJobs.push(this.jobs[i].jobId);
                         }
                     }
-                    //  let userApplications = UserApplications.showUserApplications();
-                    //  for( let i = 0; i < userApplications.length; i++) {
-                    //     let jobBuster = userApplications[i].userbuster.userId;
-                    //     console.log("job buster:"+ i + " : " + jobBuster);
-                    //     if(jobBuster == this.currentUser.userId) {
-                    //         this.filterJobs.push(userApplications[i].jobListing.jobId);
-                    //     }
-                    //  }  
                 })
                 .catch(error => {
                     console.log(error);
                 })
-        }
-
+        },
+        calculateTotalHours(job) {
+            const startDateTime = new Date(`${job.jobStartDate} ${job.startTime}`);
+            const endDateTime = new Date(`${job.jobFinishDate} ${job.endTime}`);
+            const timeDiff = Math.abs(endDateTime - startDateTime);
+            const hours = Math.ceil(timeDiff / (1000 * 60 * 60));
+            return hours;
+        },
+        calculateTotalCost(job) {
+            const totalHours = this.calculateTotalHours(job);
+            const hourlyRate = parseFloat(job.hourRate);
+            const totalCost = totalHours * hourlyRate;
+            return totalCost.toFixed(2);
+        },
     },
     mounted() {
         this.getUserApplications();

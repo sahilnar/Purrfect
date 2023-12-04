@@ -1,7 +1,7 @@
 <template>
     <div class="content"> <!-- DON'T DELETE THIS DIV. ALL THE CONTENT MUST GO INSIDE -->
         <div class="wrapperLogin d-flex flex-column justify-content-center align-items-center">
-            <img src="../assets/logo.png" alt="Shifty" height="50">
+            <img src="../assets/logo.png" alt="purrfect" height="50">
             <span class="badge rounded-pill text-bg-danger mb-3">{{ message }}</span>
             <form id="form">
                 <div class="mb-3">
@@ -14,7 +14,7 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" v-model="userLoginRequest.password">
                 </div>
-                <button type="submit" class="btn btn-dark btn-shifty-primary" @click="login">Sign In</button>
+                <button type="submit" class="btn btn-dark btn-purrfect-primary" @click="login">Sign In</button>
             </form>
         </div>
     </div>
