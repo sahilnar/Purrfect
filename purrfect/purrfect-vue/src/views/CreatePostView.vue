@@ -11,10 +11,6 @@
                     <label for="jobType" class="form-label">Type</label>
                     <select class="form-select" v-model="createPostRequest.job.kindOfJob">
                         <option value="Cat">Cat</option>
-                        <option value="Dog">Dog</option>
-                        <option value="Hamster">Hamster</option>
-                        <option value="Turtle">Turtle</option>
-                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="mb-3">
